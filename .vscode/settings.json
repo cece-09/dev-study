@@ -14,5 +14,9 @@
     "Log": {
       "parser": "plain"
     }
+  },
+  "C_Cpp.errorSquiggles": "enabled",
+  "files.associations": {
+    "__locale": "c"
   }
 }
