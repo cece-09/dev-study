@@ -2,32 +2,30 @@
 
 void merge_sort(int *, int *, int, int);
 void merge(int *, int *, int, int);
+void show(int *, int);
 
 int main(void)
 {
-  const int size = 8;
-  int src[size] = {3, 19, 44, 58, 23, 5, 0, 45};
+  const int size = 9;
+  int src[size] = {102, 6, 19, 58, 23, 5, 0, 45, 31};
   int tar[size];
 
   merge_sort(src, tar, 0, size - 1);
 
   // print the output
-  for (int i = 0; i < size; i++)
-  {
-    printf("%d ", tar[i]);
-  }
-
-  return 0;
+  show(src, size);
 }
 
 void merge_sort(int *src, int *tar, int le, int ri)
-{
+{ // base case
+  // if two are left, merge
   if (ri - le < 2)
   {
     if (src[ri] < src[le])
     {
-      tar[ri] = src[le];
-      tar[le] = src[ri];
+      int tmp = src[le];
+      src[le] = src[ri];
+      src[ri] = tmp;
     }
     return;
   }
@@ -73,6 +71,7 @@ void merge(int *src, int *tar, int le, int ri)
     {
       tar[k] = src[j];
       j++;
+      k++;
     }
   }
   else
@@ -81,6 +80,25 @@ void merge(int *src, int *tar, int le, int ri)
     {
       tar[k] = src[i];
       i++;
+      k++;
     }
   }
+
+  // tar를 src에 복사
+  i = le;
+  while (i <= ri)
+  {
+    src[i] = tar[i];
+    i++;
+  }
+}
+
+void show(int *array, int size)
+{
+  // output
+  for (int i = 0; i < size; i++)
+  {
+    printf("%d ", array[i]);
+  }
+  printf("\n");
 }
