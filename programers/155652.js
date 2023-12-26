@@ -18,9 +18,6 @@ function solution(s, skip, index) {
         let numeric = s[i].charCodeAt(0);
         let encoded = String.fromCharCode(numeric + j);
         while (cnt < index) {
-            if (s[i] === "b") {
-                console.log(numeric);
-            }
             if (numeric + j > last) {
                 // 범위를 벗어날 경우 다시 a부터 되돌리기
                 j = 0;
