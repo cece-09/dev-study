@@ -25,6 +25,7 @@
 3. 삭제되는 노드의 색이 블랙인 경우, 속성이 위반될 수 있다. 특히 노드 간 블랙 높이가 달라질 수 있다. 이를 위해 형제 노드, 부모 노드와 색을 비교하여 필요시 삭제된 자리를 대체한 노드에 extra black을 임시로 설정하고, 트리의 루트로 올라가면서 recolor & rotation을 통해 이를 해소하는 식으로 특성을 복구할 수 있다.
 
 #### Q5. 레드 블랙 트리는 어디에 쓰나요?
+
 * 우선순위 큐와 같은 ordered list를 구현하는 데 사용된다.
 * 해시 테이블과 함께 키-값 쌍을 저장하는 연관 배열을 구현하는 대표적인 방법이기도 하다.
     * **연관 배열이란?** 키-값 쌍으로 이루어진 추상 자료형. 수학적인 의미에서는 유한한 정의역을 가진 함수. 일반적으로 lookup, insert, delete 와 같은 연산을 지원.
@@ -32,5 +33,5 @@
 * 구체적인 사용처는 다음과 같다.
     1. C++의 Standard Template Library (STL)에서 std::set과 std::map을 구현하기 위해 사용된다.
     2. Java의 TreeSet과 TreeMap, HashMap이 사용한다.
-    3. Linux Kernel은 Completely Fair Scheduler (CFS)를 구현하기 위해 rbtree를 사용한다. 이 스케줄러는 태스트task를 트리로 표현하며, 다음 태스크를 찾기 위해 rbtree를 쓴다. 각 task는 vruntime (virtual runtime)을 기준으로 트리에 저장되며, 스케줄러는 leftmost 노드를 찾아 스케줄한다.
+    3. Linux Kernel은 Completely Fair Scheduler (CFS)를 구현하기 위해 rbtree를 사용한다. 이 스케줄러는 태스크task를 트리로 표현하며, 다음 태스크를 찾기 위해 rbtree를 쓴다. 각 task는 vruntime (virtual runtime, CPU가 점유된 시간)을 기준으로 트리에 저장되며, 스케줄러는 leftmost 노드를 찾아 스케줄한다.
     4. 가상메모리 관리를 위해서도 쓸 수 있을 것 같다. (pintos에서 supplementary page table을 구현하기 위해 hashmap을 사용했는데, 이거를 tree로 쓸 수 있을 듯.)
