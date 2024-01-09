@@ -1,56 +1,35 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/142085
 
-# 적의 수가 가장 많은 라운드에 무적권을 사용해야 유리
-# 순회하면서 스택에 넣고 정렬
-# 만약 스택 길이가 k이고, 병사가 0명이면 종료
+from heapq import heappush, heappop
+
+# 내림차순 정렬 구현 위해 우선순위 큐 사용
 def solution(n, k, enemy):
+    answer = 0
+    pq = []
     m = len(enemy)
-    stack = []
-    tmp = []
-    cnt = 1
-    isover = 0
 
-    stack.append(enemy[0])
-
-    for i in range(1, m):
-        if n <= 0:
-            isover = 1
-            i -= 1  # 이전 라운드까지 방어 성공
-            break
-
-        print(f"{i}: {enemy[i]}")
-        if enemy[i] < stack[-1]:
-            if cnt < k:  # 작고 count < k이면 쌓고
-                stack.append(enemy[i])
-                cnt += 1
-            else:  # 작고 count >= k이면 누적합
-                n -= enemy[i]
-            print(stack, n)
-            continue
-
-        # 크면 pop
-        while stack and enemy[i] > stack[-1]:
-            tmp.append(stack.pop())
-            cnt -= 1
-
-        stack.append(enemy[i])
-        cnt += 1
-
-        while tmp:
-            if cnt < k:
-                stack.append(tmp.pop())
-                cnt += 1
+    for i in range(m):
+        n -= enemy[i]                  # 일단 병사 제거
+        heappush(pq, -enemy[i])        # max heap
+        if n < 0:
+            if k > 0:
+                front = -heappop(pq)   # max round
+                n += front             # 무적권을 사용했다고 간주
+                k -= 1                 # 사용 횟수 체크
+                answer = i + 1         # 답이 될 수 있는 라운드 체크
             else:
-                n -= tmp.pop()
-        print(stack, n)
+                answer = i             # n < 0 이고 무적권이 남지 않음
+                break                  # 게임 종료
+        else:
+            answer = i + 1             # 답이 될 수 있는 라운드 체크
 
-    return i if isover else i+1
+    return answer
 
 
+n = 10
+k = 2
+enemy =  [5, 5, 5, 5, 5]
 # n = 7
 # k = 3
 # enemy = [4, 2, 4, 5, 3, 3, 1]
-n = 2
-k = 4
-enemy = [3, 3, 3, 3]
 print(solution(n, k, enemy))
