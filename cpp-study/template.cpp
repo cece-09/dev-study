@@ -1,28 +1,33 @@
 #include <iostream>
 #include <string>
+#include <memory>
+#include <utility>
+#include <vector>
 
 using namespace std;
 
 template <typename T>
-T my_max(T x, T y) {
-    return (x > y) ? x : y;
-}
+void change_lvr(T& val) { val = -1 * val; }
 
 template <typename T>
-class Box {
+void change_rvr(T&& val) { val = -1 * val; }
+
+template <typename T>
+void change_upt(unique_ptr<T>& val) { *val = -(*val); }
+
+template <typename T>
+class complex {
+    T r, c;
     public:
-        Box(T value): value(value) {}
-        T get_value() const { return value; }
-    private:
-        T value;
+        complex(T _r, T _c): r(_r), c(_c) {};
 };
 
-int main() {
-    int a = my_max<int>(5, 6);
-    double b = my_max<double>(4.33, 5.1);
-    cout << a << " " << b << endl;
+template <typename T>
+using ptr = T*;
 
-    Box<string> box("hello world");
-    cout << box.get_value() << endl;
+int main() {
+    int a = 10;
+    ptr<int> pt = &a;
+    cout << pt << " " << *pt << endl;
 }
 

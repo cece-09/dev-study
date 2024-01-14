@@ -27,16 +27,9 @@ int func(int c) {
     return 0;
 }
 
-int main() {
-    int c = 2; // child 예외를 throw해야 함
+#include <algorithm>
+#include <vector>
 
-    try {
-        func(c);
-    } catch(Parent& p) {
-        cout << "Parent catch!" << endl;
-        cout << p.what();
-    } catch(Child& c) {
-        cout << "Child catch!" << endl;
-        cout << c.what();
-    }
+int main() {
+    // main codes
 }
